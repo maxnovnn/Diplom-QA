@@ -17,18 +17,18 @@
 
 ### **Документация:**
 
-* [Чек-лист](
-* [Тест-кейсы](
+* [Чек-лист](https://github.com/maxnovnn/Diplom-QA/blob/main/Check.xlsx)
+* [Тест-кейсы](https://github.com/maxnovnn/Diplom-QA/blob/main/Cases.xlsx)
 
 
 **Перечень используемых инструментов для автоматизации тестирования:**
 
-**1.** Android Studio
-**2.** Java 8
-**3.** Espresso
-**4.** JUnit
-**5.** Gradle
-**6.**  Allure
+1. Android Studio
+2. Java 8
+3. Espresso
+4. JUnit
+5. Gradle
+6. Allure
 
 
 **Перечень и описание возможных рисков при автоматизации тестирования:**
