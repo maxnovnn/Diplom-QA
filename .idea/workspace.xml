@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ef9730c0-bec4-435c-886c-0f9610f7d785" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/elements/AboutScreen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/elements/AuthorizationScreen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/elements/ClaimsScreen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/elements/MainScreen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/elements/NewsControlPanelScreen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/elements/NewsScreen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/elements/QuotesScreen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/elements/WaitId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/steps/AboutSteps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/steps/AuthorizationSteps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/steps/ClaimsSteps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/steps/MainSteps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/steps/NewsControlPanelSteps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/steps/NewsSteps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/steps/QuotesSteps.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/tests/AboutTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/tests/AuthorizationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/tests/ClaimsTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/tests/MainTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/tests/NewsControlPanelTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/tests/NewsTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/tests/QuotesTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/util/Util.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fmh-android/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/fmh-android/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fmh-android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/fmh-android/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fmh-android/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fmh-android/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fmh-android/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/fmh-android/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fmh-android/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/fmh-android/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fmh-android/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/fmh-android/gradlew.bat" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2V26dQgoJql2FiD1W6svSw2ABdZ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "cidr.known.project.marker": "true",
+    "last_opened_file_path": "C:/Diplom-QA",
+    "settings.editor.selected.configurable": "AndroidSdkUpdater"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ef9730c0-bec4-435c-886c-0f9610f7d785" name="Changes" comment="" />
+      <created>1694021916301</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1694021916301</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
