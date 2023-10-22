@@ -1,129 +1,60 @@
 package ru.netology.qa.elements;
 
-import static androidx.test.espresso.matcher.ViewMatchers.withHint;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withParent;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.allOf;
-
-import android.view.View;
-
-import org.hamcrest.Matcher;
-
+import androidx.test.espresso.ViewInteraction;
 import ru.iteco.fmhandroid.R;
-import ru.netology.qa.steps.ClaimsSteps;
 
-public class ClaimsScreen extends ClaimsSteps {
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.matcher.ViewMatchers.*;
+import static org.hamcrest.Matchers.allOf;
+import static ru.netology.qa.util.Util.withIndex;
 
-    public static Matcher<View> getClaimsElementsButtonMainMenu() {
-        return allOf(withId(R.id.main_menu_image_button));
-    }
+public class ClaimsScreen {
+    public ViewInteraction claimsScreen = onView(withId(R.id.claim_list_recycler_view));
+    public ViewInteraction openFilter = onView(withId(R.id.filters_material_button));
+    public ViewInteraction create = onView(withId(R.id.add_new_claim_material_button));
+    public ViewInteraction closeClaim = onView(withId(R.id.close_image_button));
+    public ViewInteraction openFirstClaim = onView(allOf(withIndex(withId(R.id.claim_list_card), 0)));
+    public ViewInteraction saveButton = onView(withId(R.id.save_button));
+    public ViewInteraction cancelButton = onView(withId(R.id.cancel_button));
+    public ViewInteraction popUpOk = onView(withText("OK"));
+    public ViewInteraction popUpCancel = onView(withText("CANCEL"));
+    public ViewInteraction emptyFieldsWarning = onView(withText("Fill empty fields"));
 
-    public static Matcher<View> getClaimsElementsButtonClaims () {
-        return allOf(withId(android.R.id.title), withText("Claims"));
-    }
+    public ViewInteraction filterScreen = onView(withId(R.id.claim_filter_dialog_title));
+    public ViewInteraction checkBoxOpen = onView(withId(R.id.item_filter_open));
+    public ViewInteraction checkBoxInProgress = onView(withId(R.id.item_filter_in_progress));
+    public ViewInteraction executed = onView(withId(R.id.item_filter_executed));
+    public ViewInteraction cancelled = onView(withId(R.id.item_filter_cancelled));
+    public ViewInteraction applyClaims = onView(withId(R.id.claim_list_filter_ok_material_button));
+    public ViewInteraction cancelClaims = onView(withId(R.id.claim_filter_cancel_material_button));
 
-    public static Matcher<View> getClaimsElementsButtonFilter () {
-        return allOf(withId(R.id.filters_material_button));
-    }
+    public ViewInteraction creatingScreen = onView(withText("Creating"));
+    public ViewInteraction createTitle = onView(withId(R.id.title_edit_text));
+    public ViewInteraction createExecutor = onView(withId(R.id.executor_drop_menu_auto_complete_text_view));
+    public ViewInteraction createDate = onView(withId(R.id.date_in_plan_text_input_edit_text));
+    public ViewInteraction createTime = onView(withId(R.id.time_in_plan_text_input_edit_text));
+    public ViewInteraction description = onView(withId(R.id.description_material_text_view));
+    public ViewInteraction createDescription = onView(withId(R.id.description_edit_text));
 
-    public static Matcher<View> getClaimsElementsRemoveCheckBoxOpen () {
-        return allOf(withId(R.id.item_filter_open));
-    }
-
-    public static Matcher<View> getClaimsElementsRemoveCheckBoxInProgress () {
-        return  allOf(withId(R.id.item_filter_in_progress));
-    }
-
-    public static Matcher<View> getClaimsElementsCheckBoxExecuted () {
-        return allOf(withId(R.id.item_filter_executed));
-    }
-
-    public static Matcher<View> getClaimsElementsCheckBoxCancelled() {
-        return allOf(withId(R.id.item_filter_cancelled));
-    }
-
-    public static Matcher<View> getClaimsElementsButtonOk () {
-        return allOf(withId(R.id.claim_list_filter_ok_material_button));
-    }
-
-    public static Matcher<View> getClaimsElementsButtonAddClaim () {
-        return allOf(withId(R.id.add_new_claim_material_button));
-    }
-
-    public static Matcher<View> getClaimsElementsTitleField () {
-        return allOf(withHint("Title"), withParent(withParent(withId(R.id.title_text_input_layout))));
-    }
-
-    public static Matcher<View> getClaimsElementsExecutorField () {
-        return allOf(withId(R.id.executor_drop_menu_auto_complete_text_view));
-    }
-
-    public static Matcher<View> getClaimsElementsDateField () {
-        return allOf(withId(R.id.date_in_plan_text_input_edit_text));
-    }
-
-    public static Matcher<View> getClaimsElementsButtonOkDate () {
-        return allOf(withId(android.R.id.button1));
-    }
-
-    public static Matcher<View> getClaimsElementsTimeField () {
-        return allOf(withId(R.id.time_in_plan_text_input_edit_text));
-    }
-
-    public static Matcher<View> getClaimsElementsButtonOkTime () {
-        return allOf(withId(android.R.id.button1));
-    }
-
-    public static Matcher<View> getClaimsElementsDescriptionField () {
-        return allOf(withId(R.id.description_edit_text));
-    }
-
-    public static Matcher<View> getClaimsElementsButtonSave () {
-        return allOf(withId(R.id.save_button));
-    }
-
-    public static Matcher<View> getClaimsElementsButtonOkError () {
-        return allOf(withId(android.R.id.button1));
-    }
-
-    public static Matcher<View> getClaimsElementsButtonCancelClaim () {
-        return allOf(withId(R.id.cancel_button));
-    }
-
-    public static Matcher<View> getClaimsElementsButtonOkNotification () {
-        return allOf(withId(android.R.id.button1));
-    }
-
-    public static Matcher<View> getClaimsElementsEditClaim () {
-        return allOf(withId(R.id.edit_processing_image_button));
-    }
-
-    public static Matcher<View> getClaimsElementsOpenClaim() {
-        return allOf(withIndex(withId(R.id.title_material_text_view), 0));
-    }
-
-    public static Matcher<View> getClaimsElementsButtonAddComment () {
-        return allOf(withId(R.id.add_comment_image_button));
-    }
-
-    public static Matcher<View> getClaimsElementsButtonEditComment () {
-        return allOf(withIndex(withId(R.id.edit_comment_image_button), 0));
-    }
-
-    public static Matcher<View> getClaimsElementsCommentField () {
-        return allOf(withHint("Comment"), withParent(withParent(withId(R.id.comment_text_input_layout))));
-    }
-
-    public static Matcher<View> getClaimsElementsButtonSettings () {
-        return allOf(withId(R.id.status_processing_image_button));
-    }
-
-    public static Matcher<View> getClaimsElementsButtonTakeToWork () {
-        return allOf(withId(android.R.id.title), withText("take to work"));
-    }
-
-    public static Matcher<View> getClaimsElementsButtonCancel () {
-        return allOf(withId(android.R.id.title), withText("Cancel"));
-    }
+    public ViewInteraction editButton = onView(withId(R.id.edit_processing_image_button));
+    public ViewInteraction editingScreen = onView(withText("Editing"));
+    public ViewInteraction editTitle = onView(withId(R.id.title_edit_text));
+    public ViewInteraction editExecutor = onView(withId(R.id.executor_drop_menu_auto_complete_text_view));
+    public ViewInteraction editDate = onView(withId(R.id.date_in_plan_text_input_edit_text));
+    public ViewInteraction editTime = onView(withId(R.id.time_in_plan_text_input_edit_text));
+    public ViewInteraction editDescription = onView(withId(R.id.description_edit_text));
+    public ViewInteraction settingButton = onView(withId(R.id.status_processing_image_button));
+    public ViewInteraction statusButtonTakeToWork = onView(withText("take to work"));
+    public ViewInteraction statusButtonCancel = onView(withText("Cancel"));
+    public ViewInteraction statusButtonToExecute = onView(withText("To execute"));
+    public ViewInteraction commentForExecution = onView(withId(R.id.editText));
+    public ViewInteraction fieldComment = onView(allOf(withHint("Comment"),withParent(withParent(withId(R.id.comment_text_input_layout)))));
+    public ViewInteraction addComment = onView(withId(R.id.add_comment_image_button));
+    public ViewInteraction editComment = onView(allOf(withIndex(withId(R.id.edit_comment_image_button), 1)));
+    public ViewInteraction comment = onView(withId(R.id.comments_material_card_view));
+    public ViewInteraction blockComment = onView(withId(R.id.all_claims_cards_block_constraint_layout));
+    public ViewInteraction buttonStatus = onView(withId(R.id.status_icon_image_view));
+    public ViewInteraction claimStatusInProgress = onView(withText("In progress"));
+    public ViewInteraction claimStatusCanceled = onView(withText("Canceled"));
+    public ViewInteraction claimStatusToExecute = onView(withText("To execute"));
 }
