@@ -1,20 +1,35 @@
 package ru.netology.qa.util;
 
-import static org.hamcrest.EasyMock2Matchers.equalTo;
-import static kotlin.jvm.internal.Intrinsics.checkNotNull;
+import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
+import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;
+import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 
-import android.os.IBinder;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.ViewParent;
+import android.widget.FrameLayout;
 
-import androidx.test.espresso.Root;
+import androidx.core.widget.NestedScrollView;
+import androidx.test.espresso.PerformException;
+import androidx.test.espresso.UiController;
+import androidx.test.espresso.ViewAction;
+import androidx.test.espresso.matcher.ViewMatchers;
+import androidx.test.espresso.util.HumanReadables;
+import androidx.test.rule.ActivityTestRule;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.Rule;
 
+import ru.iteco.fmhandroid.ui.AppActivity;
 
 public class Util {
+
+    @Rule
+    public ActivityTestRule<AppActivity> activityTestRule =
+            new ActivityTestRule<>(AppActivity.class);
+
     public static Matcher<View> withIndex(final Matcher<View> matcher, final int index) {
         return new TypeSafeMatcher<View>() {
             int currentIndex = 0;
@@ -33,29 +48,64 @@ public class Util {
         };
     }
 
-    public static class ToastMatcher extends TypeSafeMatcher<Root> {
+    public static ViewAction nestedScrollTo() {
+        return new ViewAction() {
 
-        @Override
-        public void describeTo(Description description) {
-            description.appendText("is toast");
-        }
-
-        @Override
-        public boolean matchesSafely(Root root) {
-            int type = root.getWindowLayoutParams().get().type;
-            if ((type == WindowManager.LayoutParams.TYPE_TOAST)) {
-                IBinder windowToken = root.getDecorView().getWindowToken();
-                IBinder appToken = root.getDecorView().getApplicationWindowToken();
-                if (windowToken == appToken) {
-                    return true;
-                }
+            @Override
+            public Matcher<View> getConstraints() {
+                return Matchers.allOf(
+                        isDescendantOfA(isAssignableFrom(NestedScrollView.class)),
+                        withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE));
             }
-            return false;
-        }
+            @Override
+            public String getDescription() {
+                return "View is not NestedScrollView";
+            }
+
+            @Override
+            public void perform(UiController uiController, View view) {
+                try {
+                    NestedScrollView nestedScrollView = (NestedScrollView)
+                            findFirstParentLayoutOfClass(view, NestedScrollView.class);
+                    if (nestedScrollView != null) {
+                        nestedScrollView.scrollTo(0, view.getTop());
+                    } else {
+                        throw new Exception("Unable to find NestedScrollView parent.");
+                    }
+                } catch (Exception e) {
+                    throw new PerformException.Builder()
+                            .withActionDescription(this.getDescription())
+                            .withViewDescription(HumanReadables.describe(view))
+                            .withCause(e)
+                            .build();
+                }
+                uiController.loopMainThreadUntilIdle();
+            }
+
+        };
     }
 
-    public static Matcher<Object> withItemContent(String expectedText) {
-        checkNotNull(expectedText);
-        return withItemContent(equalTo(expectedText));
+    private static View findFirstParentLayoutOfClass(View view, Class<? extends View> parentClass) {
+        ViewParent parent = new FrameLayout(view.getContext());
+        ViewParent incrementView = null;
+        int i = 0;
+        while (parent != null && !(parent.getClass() == parentClass)) {
+            if (i == 0) {
+                parent = findParent(view);
+            } else {
+                parent = findParent(incrementView);
+            }
+            incrementView = parent;
+            i++;
+        }
+        return (View) parent;
+    }
+    String nextYear = "15.07.2024";
+    private static ViewParent findParent(View view) {
+        return view.getParent();
+    }
+
+    private static ViewParent findParent(ViewParent view) {
+        return view.getParent();
     }
 }

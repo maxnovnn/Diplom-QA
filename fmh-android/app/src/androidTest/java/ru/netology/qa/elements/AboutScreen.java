@@ -1,15 +1,27 @@
 package ru.netology.qa.elements;
 
-import androidx.test.espresso.ViewInteraction;
-import ru.iteco.fmhandroid.R;
-
-import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
 
-public class AboutScreen {
-    public ViewInteraction title = onView(withId(R.id.about_version_title_text_view));
-    public ViewInteraction version = onView(withId(R.id.about_version_value_text_view));
-    public ViewInteraction privacy = onView(withId(R.id.about_privacy_policy_value_text_view));
-    public ViewInteraction terms = onView(withId(R.id.about_terms_of_use_value_text_view));
-    public ViewInteraction backButton = onView(withId(R.id.about_back_image_button));
+import android.view.View;
+
+import org.hamcrest.Matcher;
+
+import ru.iteco.fmhandroid.R;
+import ru.netology.qa.steps.AboutSteps;
+
+public class AboutScreen extends AboutSteps {
+
+    public static  Matcher<View> getAboutElementsButtonAbout() {
+        return allOf(withId(android.R.id.title), withText("About"));
+    }
+
+    public static Matcher<View> getAboutElementsButtonPrivacyPolicy() {
+        return allOf(withId(R.id.about_privacy_policy_value_text_view));
+    }
+
+    public static Matcher<View> getAboutElementsButtonTermsOfUse() {
+        return withId(R.id.about_terms_of_use_value_text_view);
+    }
 }

@@ -1,240 +1,308 @@
 package ru.netology.qa.steps;
 
+import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsButtonAddClaim;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsButtonAddComment;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsButtonCancel;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsButtonCancelClaim;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsButtonClaims;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsButtonEditComment;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsButtonFilter;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsButtonMainMenu;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsButtonOk;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsButtonOkDate;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsButtonOkError;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsButtonOkNotification;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsButtonOkTime;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsButtonSave;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsButtonSettings;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsButtonTakeToWork;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsCheckBoxCancelled;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsCheckBoxExecuted;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsCommentField;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsDateField;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsDescriptionField;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsEditClaim;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsExecutorField;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsOpenClaim;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsRemoveCheckBoxInProgress;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsRemoveCheckBoxOpen;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsTimeField;
+import static ru.netology.qa.elements.ClaimsScreen.getClaimsElementsTitleField;
+import static ru.netology.qa.elements.WaitId.waitFor;
+import static ru.netology.qa.elements.WaitId.waitUntilElement;
+
+import android.view.View;
+
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 
 import io.qameta.allure.kotlin.Allure;
-import ru.netology.qa.elements.ClaimsScreen;
+import ru.iteco.fmhandroid.R;
 
 public class ClaimsSteps {
-    ClaimsScreen Claims = new ClaimsScreen();
 
-    public void isClaimsScreen() {
-        Allure.step("Проверить, что это экно заявок");
-        Claims.claimsScreen.check(matches(isDisplayed()));
+
+    public static void clickButtonMainMenu() {
+        Allure.step("Нажать на кнопку Главное меню");
+        waitUntilElement(R.id.main_menu_image_button);
+        waitFor(2);
+        onView(getClaimsElementsButtonMainMenu())
+                .perform(click());
     }
 
-    public void filter() {
-        Allure.step("Открыть фильтр");
-        Claims.openFilter.perform(click());
+    public static void clickButtonClaims() {
+        Allure.step("Нажать на кнопку Заявки");
+        waitUntilElement(android.R.id.title);
+        onView(getClaimsElementsButtonClaims())
+                .perform(click());
     }
 
-    public void open() {
-        Allure.step("Открытие заявки");
-        Claims.openFirstClaim.perform(click());
+    public static void clickButtonFilter() {
+        Allure.step("Нажать на кнопку Фильтрация");
+        waitUntilElement(R.id.filters_material_button);
+        onView(getClaimsElementsButtonFilter())
+                .perform(click());
     }
 
-    public void goBack() {
-        Allure.step("Возврат из открытой заявки");
-        Claims.closeClaim.perform(click());
-    }
-
-    public void isFilteringScreen() {
-        Allure.step("Проверить, что это экно фильтрации заявок");
-        Claims.filterScreen.check(matches(isDisplayed()));
-    }
-
-    public void removeCheckBoxOpen() {
+    public static void clickRemoveCheckBoxOpen() {
         Allure.step("Снять флажок с чекбокса Открыта");
-        Claims.checkBoxOpen.perform(click());
+        waitUntilElement(R.id.item_filter_open);
+        onView(getClaimsElementsRemoveCheckBoxOpen())
+                .perform(click());
     }
 
-    public void removeCheckBoxInProgress() {
+    public static void clickButtonOk() {
+        Allure.step("Нажать кнопку ОК");
+        waitUntilElement(R.id.claim_list_filter_ok_material_button);
+        onView(getClaimsElementsButtonOk())
+                .perform(click());
+    }
+
+    public static void clickRemoveCheckBoxInProgress() {
         Allure.step("Снять флажок с чекбокса В работе");
-        Claims.checkBoxInProgress.perform(click());
-    }
-    public void executedCheck() {
-        Allure.step("Фильтрация заявок по критерию Выполнена");
-        Claims.executed.perform(click());
-    }
-    public void cancelledCheck() {
-        Allure.step("Фильтрация заявок по критерию Отмененные");
-        Claims.cancelled.perform(click());
-    }
-    public void applyClaims() {
-        Allure.step("Подтверждение фильтрации заявок");
-        Claims.applyClaims.perform(click());
+        waitUntilElement(R.id.item_filter_in_progress);
+        onView(getClaimsElementsRemoveCheckBoxInProgress())
+                .perform(click());
     }
 
-    public void cancelClaims() {
-        Allure.step("Отмена фильтрации заявок");
-        Claims.cancelClaims.perform(click());
-    }
-    public void addNew() {
-        Allure.step("Нажать кнопку добавления заявки");
-        Claims.create.perform(click());
+    public static void clickCheckBoxExecuted() {
+        Allure.step("Выбрать критерий для фильтрации Выполнена");
+        waitUntilElement(R.id.item_filter_executed);
+        onView(getClaimsElementsCheckBoxExecuted())
+                .perform(click());
     }
 
-    public void isCreatingScreen() {
-        Allure.step("Проверить, что это окно создания заявки");
-        Claims.creatingScreen.check(matches(isDisplayed()));
+    public static void clickCheckBoxCancelled() {
+        Allure.step("Выбрать критерий для фильтрации Отмененные");
+        waitUntilElement(R.id.item_filter_cancelled);
+        onView(getClaimsElementsCheckBoxCancelled())
+                .perform(click());
     }
 
-    public void enterTitle(String text) {
-        Allure.step("Ввести заголовок");
-        Claims.createTitle.perform(replaceText(text));
+    public static void clickButtonAddClaim() {
+        Allure.step("Нажать на кнопку Создание Заявки");
+        waitUntilElement(R.id.add_new_claim_material_button);
+        onView(getClaimsElementsButtonAddClaim())
+                .perform(click());
     }
 
-    public void enterExecutor(String text) {
-        Allure.step("Выбрать из списка ФИО исполнителя");
-        Claims.createExecutor.perform(replaceText(text));
+    public static void clickTitleField() {
+        Allure.step("Ввести в поле Тема наименование темы");
+        waitUntilElement(R.id.title_text_input_layout);
+        onView(getClaimsElementsTitleField())
+                .perform(replaceText("Осмотр"), closeSoftKeyboard());
     }
 
-    public void enterDate(String text) {
-        Allure.step("Ввести дату");
-        Claims.createDate.perform(replaceText(text));
+    public static void clickCheckBoxExecutorField() {
+        Allure.step("В поле Исполнитель выбрать из списка ФИО исполнителя");
+        waitUntilElement(R.id.executor_drop_menu_auto_complete_text_view);
+        onView(getClaimsElementsExecutorField())
+                .perform(replaceText("Петров Василий Иванович"), closeSoftKeyboard());
     }
 
-    public void enterTime(String text) {
-        Allure.step("Ввести время");
-        Claims.createTime.perform(replaceText(text));
+    public static void clickDateField() {
+        Allure.step("Нажать на поле Дата");
+        waitUntilElement(R.id.date_in_plan_text_input_edit_text);
+        onView(getClaimsElementsDateField())
+                .perform(click());
     }
 
-    public void enterDescription(String text) {
-        Allure.step("Ввести описание заявки");
-        Claims.createDescription.perform(replaceText(text),closeSoftKeyboard());
+    public static void clickButtonOkDate() {
+        Allure.step("Нажать кнопку ОК");
+        waitUntilElement(android.R.id.button1);
+        onView(getClaimsElementsButtonOkDate())
+                .perform(click());
     }
 
-    public void saveButton() {
-        Allure.step("Нажать на кнопку сохранить");
-        Claims.saveButton.perform(click());
-
+    public static void clickTimeField() {
+        Allure.step("Нажать на поле Время");
+        waitUntilElement(R.id.time_in_plan_text_input_edit_text);
+        onView(getClaimsElementsTimeField())
+                .perform(click());
     }
 
-    public void cancelButton() {
-        Allure.step("Нажать на кнопку отменить");
-        Claims.cancelButton.perform(click());
+    public static void clickButtonOkTime() {
+        Allure.step("Нажать кнопку ОК");
+        waitUntilElement(android.R.id.button1);
+        onView(getClaimsElementsButtonOkTime())
+                .perform(click());
     }
 
-    public void checkPopUpOk() {
-        Allure.step("Проверить наличие всплывающей кнопки Ok");
-        Claims.popUpOk.perform(click());
+    public static void clickDescriptionField() {
+        Allure.step("Ввести в поле Описание описание заявки");
+        waitUntilElement(R.id.description_edit_text);
+        onView(getClaimsElementsDescriptionField())
+                .perform(replaceText("Срочный осмотр"), closeSoftKeyboard());
     }
 
-    public void checkPopUpCancel() {
-        Allure.step("Проверить наличие всплывающей кнопки Cancel");
-        Claims.popUpCancel.perform(click());
+    public static void clickButtonSave() {
+        Allure.step("Нажать на кнопку Сохранить");
+        waitUntilElement(R.id.save_button);
+        onView(getClaimsElementsButtonSave())
+                .perform(click());
     }
 
-    public void checkEmpty() {
-        Allure.step("Проверить уведомление о заполнении пустых полей");
-        Claims.emptyFieldsWarning.check(matches(isDisplayed()));
+    public static void clickButtonOkError() {
+        Allure.step("Нажать кнопку ОК");
+        waitUntilElement(android.R.id.button1);
+        onView(getClaimsElementsButtonOkError())
+                .perform(click());
     }
 
-    public void enterEditButton() {
-        Allure.step("Нажать на кнопку редактирования заявки");
-        Claims.editButton.perform(click());
+    public static void clickButtonCancelClaim() {
+        Allure.step("Нажать кнопку Отмена");
+        waitUntilElement(R.id.cancel_button);
+        onView(getClaimsElementsButtonCancelClaim())
+                .perform(click());
     }
 
-    public void isEditingScreen() {
-        Allure.step("Проверить, что это окно редактирования заявки");
-        Claims.editingScreen.check(matches(isDisplayed()));
+    public static void clickButtonOkNotification() {
+        Allure.step("Нажать кнопку ОК Уведомления");
+        waitUntilElement(android.R.id.button1);
+        onView(getClaimsElementsButtonOkNotification())
+                .perform(click());
     }
 
-    public void enterEditTitle(String title) {
-        Allure.step("Ввести отредактированный текст заголовка");
-        Claims.editTitle.perform(replaceText(title));
+    public static void clickTitleFieldOneCharacter() {
+        Allure.step("Ввести в поле Тема один символ");
+        onView(getClaimsElementsTitleField())
+                .perform(replaceText("1"), closeSoftKeyboard());
     }
 
-    public void selectEditExecutor(String text) {
-        Allure.step("Выбрать исполнителя заявки");
-        Claims.editExecutor.perform(click());
-        Claims.editExecutor.perform(replaceText(text));
+    public static void clickTitleFieldMaximumCharacters() {
+        Allure.step("Ввести в поле Тема максимально-допустимое количество символов");
+        onView(getClaimsElementsTitleField())
+                .perform(replaceText("12345678909874563210qwertyuiopasdfghjklzxcvbnmhgfd"), closeSoftKeyboard());
     }
 
-    public void enterEditDate(String text) {
-        Allure.step("Ввести дату");
-        Claims.editDate.perform(replaceText(text));
+    public static void clickExecutorFieldConsistsLettersAndNumbers() {
+        Allure.step("Ввести в поле Исполнитель буквы латинского алфавита и цифры");
+        onView(getClaimsElementsExecutorField())
+                .perform(replaceText("Bngr852 598itub Mh943nh"), closeSoftKeyboard());
     }
 
-    public void enterEditTime(String text) {
-        Allure.step("Ввести время");
-        Claims.editTime.perform(replaceText(text));
+    public static void clickExecutorFieldOtherData() {
+        Allure.step("Ввести в поле Исполнитель другие данные");
+        onView(getClaimsElementsExecutorField())
+                .perform(replaceText("Волков Роман Алесандрович"), closeSoftKeyboard());
     }
 
-    public void enterEditDescription(String text) {
-        Allure.step("Ввести новое описание заявки");
-        Claims.editDescription.perform(clearText(),(replaceText(text)),closeSoftKeyboard());
+    public static void clickExecutorFieldSpecialCharacters() {
+        Allure.step("Ввести в поле Исполнитель спецсимволы");
+        onView(getClaimsElementsExecutorField())
+                .perform(replaceText("*(&^)%!#"), closeSoftKeyboard());
     }
 
-    public void clickButtonSettings(){
-        Allure.step("Нажать на кнопку Настройки");
-        Claims.settingButton.perform(click());
+    static String nextYear = "28.06.2024";
+
+    public static void clickDateFieldNextYear() {
+        Allure.step("В поле Дата выбрать дату будущего года");
+        onView(getClaimsElementsDateField())
+                .perform(replaceText(nextYear));
     }
 
-    public void clickButtonTakeToWork(){
-        Allure.step("Изменение статуса заявки с Открыта на В работу");
-        Claims.statusButtonTakeToWork.perform(click());
+    public static void clickOpenClaim() {
+        Allure.step("Открыть Заявку");
+        waitUntilElement(R.id.title_material_text_view);
+        onView(getClaimsElementsOpenClaim())
+                .perform(click());
     }
 
-    public void clickButtonCancel(){
-        Allure.step("Изменение статуса заявки с Открыта на Отменена");
-        Claims.statusButtonCancel.perform(click());
+    public static void clickEditClaim() {
+        Allure.step("Нажать на кнопку Редактирование Заявки");
+        waitUntilElement(R.id.edit_processing_image_button);
+        onView(getClaimsElementsEditClaim())
+                .perform(click());
     }
 
-    public void clickButtonToExecute(){
-        Allure.step("Изменение статуса заявки с В работе на Выполнена");
-        Claims.statusButtonToExecute.perform(click());
+    public static void clickEditClaimStatusOpen() {
+        Allure.step("Нажать на заявку, находящаяся в статусе Открыта, для редактирования");
+        onView(getClaimsElementsDescriptionField())
+                .perform(clearText(), replaceText("Редактирование заявки, находящаяся в статусе Открыта"),
+                        closeSoftKeyboard());
     }
 
-    public void addCommentForExecute(){
-        Allure.step("Добавить комментарий для выполненной заявки");
-        Claims.commentForExecution.perform(clearText(), replaceText("Выполнена"));
-    }
-
-    public void clickButtonAddComment(){
+    public static void clickButtonAddComment() {
         Allure.step("Нажать на кнопку Добавить комментарий");
-        Claims.addComment.perform(click());
+        waitUntilElement(R.id.add_comment_image_button);
+        onView(getClaimsElementsButtonAddComment())
+                .perform(click());
     }
 
-    public void addToCommentField(){
+    public static void clickCommentField() {
         Allure.step("В поле Комментарий добавить комментарий");
-        Claims.fieldComment.perform(clearText(), replaceText("Новый комментарий"));
+        waitUntilElement(R.id.comment_text_input_layout);
+        onView(getClaimsElementsCommentField())
+                .perform(clearText(), replaceText("Новый комментарий"), closeSoftKeyboard());
     }
 
-    public void editCommentField(){
-        Allure.step("В поле Комментарий изменить комментарий");
-        Claims.fieldComment.perform(clearText(), replaceText("Комментарий изменен"));
-    }
-
-    public void checkCommentField(){
-        Allure.step("Проверить комментарий в поле Комментарий");
-        Claims.comment.check(matches(isDisplayed()));
-    }
-
-    public void checkDescriptionField(){
-        Allure.step("Проверить заголовок заявки");
-        Claims.description.check(matches(isDisplayed()));
-    }
-
-    public void clickButtonEditComment(){
+    public static void clickButtonEditComment() {
         Allure.step("Нажать на кнопку Редактировать комментарий");
-        Claims.editComment.perform(click());
+        waitUntilElement(R.id.edit_comment_image_button);
+        onView(getClaimsElementsButtonEditComment())
+                .perform(click());
     }
 
-    public void checkBlockComment(){
-        Allure.step("Проверить наличие блока с комментариями");
-        Claims.blockComment.perform(click());
+    public static void clickButtonSettings() {
+        Allure.step("Нажать на кнопку Настройки");
+        waitUntilElement(R.id.status_processing_image_button);
+        onView(getClaimsElementsButtonSettings())
+                .perform(click());
     }
 
-    public void checkClaimStatusInProgress(){
-        Allure.step("Проверить статус заявки В работу");
-        Claims.buttonStatus.perform(click());
-        Claims.claimStatusInProgress.check(matches(isDisplayed()));
+    public static void clickButtonTakeToWork() {
+        Allure.step("Сменить статус заявки, находящаяся в статусе Открыта на статус В работе");
+        waitUntilElement(android.R.id.title);
+        onView(getClaimsElementsButtonTakeToWork())
+                .perform(click());
     }
 
-    public void checkClaimStatusCanceled(){
-        Allure.step("Проверить статус заявки Отменена");
-        Claims.buttonStatus.perform(click());
-        Claims.claimStatusCanceled.check(matches(isDisplayed()));
+    public static void clickButtonCancel() {
+        Allure.step("Нажать на кнопку Отмена");
+        waitUntilElement(android.R.id.title);
+        onView(getClaimsElementsButtonCancel())
+                .perform(click());
     }
 
-    public void checkClaimStatusToExecute(){
-        Allure.step("Проверить статус заявки Выполнена");
-        Claims.claimStatusToExecute.check(matches(isDisplayed()));
+    public static Matcher<View> withIndex(final Matcher<View> matcher, final int index) {
+        return new TypeSafeMatcher<View>() {
+            @Override
+            public void describeTo(Description description) {
+
+            }
+
+            @Override
+            protected boolean matchesSafely(View item) {
+                return false;
+            }
+
+            int currentIndex = 0;
+        };
     }
 }

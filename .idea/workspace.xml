@@ -28,6 +28,9 @@
       <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/tests/NewsTest.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/tests/QuotesTest.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/fmh-android/app/src/androidTest/java/ru/netology/qa/util/Util.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Result.md" beforeDir="false" afterPath="$PROJECT_DIR$/Result.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/allure-results.rar" beforeDir="false" afterPath="$PROJECT_DIR$/allure-results.rar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fmh-android/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/fmh-android/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fmh-android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/fmh-android/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fmh-android/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fmh-android/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
@@ -41,7 +44,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/fmh-android" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -58,7 +61,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "cidr.known.project.marker": "true",
-    "last_opened_file_path": "C:/Diplom-QA",
+    "last_opened_file_path": "C:/Diplom-QA/fmh-android",
     "settings.editor.selected.configurable": "AndroidSdkUpdater"
   }
 }]]></component>
