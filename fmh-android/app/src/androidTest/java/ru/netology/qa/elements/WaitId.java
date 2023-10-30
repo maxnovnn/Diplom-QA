@@ -1,9 +1,8 @@
 package ru.netology.qa.elements;
 
-import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import android.view.View;
 
@@ -31,11 +30,7 @@ public class WaitId {
 
     private static long waitTimeout = 5000;
 
-    public static void waitUntilElement(final int viewId) {
-        onView(isRoot()).perform(waitId(viewId, waitTimeout));
-    }
-
-    public static ViewAction waitId(final int viewId, final long millis) {
+    public static ViewAction waitDisplayed(final int viewId, final long millis) {
         return new ViewAction() {
             @Override
             public Matcher<View> getConstraints() {
@@ -44,7 +39,7 @@ public class WaitId {
 
             @Override
             public String getDescription() {
-                return "wait for a specific view with id <" + viewId + "> during " + millis + " millis.";
+                return "wait for a specific view with id <" + viewId + "> has been displayed during " + millis + " millis.";
             }
 
             @Override
@@ -52,18 +47,20 @@ public class WaitId {
                 uiController.loopMainThreadUntilIdle();
                 final long startTime = System.currentTimeMillis();
                 final long endTime = startTime + millis;
-                final Matcher<View> viewMatcher = withId(viewId);
+                final Matcher<View> matchId = withId(viewId);
+                final Matcher<View> matchDisplayed = isDisplayed();
 
                 do {
                     for (View child : TreeIterables.breadthFirstViewTraversal(view)) {
-                        // found view with required ID
-                        if (viewMatcher.matches(child)) {
+                        if (matchId.matches(child) && matchDisplayed.matches(child)) {
                             return;
                         }
                     }
+
                     uiController.loopMainThreadForAtLeast(50);
                 }
                 while (System.currentTimeMillis() < endTime);
+
                 // timeout happens
                 throw new PerformException.Builder()
                         .withActionDescription(this.getDescription())
@@ -72,56 +69,5 @@ public class WaitId {
                         .build();
             }
         };
-    }
-
-    public static ViewAction waitId(final String viewText, final long millis) {
-        return new ViewAction() {
-            @Override
-            public Matcher<View> getConstraints() {
-                return isRoot();
-            }
-
-            @Override
-            public String getDescription() {
-//                return "wait for a specific view with id <" + viewText + "> during " + millis + " millis.";
-                return "wait up to " + millis + " for the view to have text" + viewText;
-            }
-
-            @Override
-            public void perform(final UiController uiController, final View view) {
-                uiController.loopMainThreadUntilIdle();
-                final long startTime = System.currentTimeMillis();
-                final long endTime = startTime + millis;
-                final Matcher<View> viewMatcher = withText(viewText);
-
-                do {
-                    for (View child : TreeIterables.breadthFirstViewTraversal(view)) {
-                        // found view with required ID
-                        if (viewMatcher.matches(child)) {
-                            return;
-                        }
-                    }
-                    uiController.loopMainThreadForAtLeast(50);
-                }
-                while (System.currentTimeMillis() < endTime);
-                // timeout happens
-                throw new PerformException.Builder()
-                        .withActionDescription(this.getDescription())
-                        .withViewDescription(HumanReadables.describe(view))
-                        .withCause(new TimeoutException())
-                        .build();
-            }
-        };
-    }
-
-    public static void waitFor(int seconds) {
-        seconds = seconds < 0 ? 0 : seconds;
-        while (--seconds >= 0) {
-            try {
-                Thread.sleep(1000);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 }

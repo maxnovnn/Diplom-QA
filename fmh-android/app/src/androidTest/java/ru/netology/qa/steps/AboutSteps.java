@@ -1,40 +1,60 @@
 package ru.netology.qa.steps;
 
-import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isClickable;
+import static androidx.test.espresso.intent.Intents.intended;
+import static androidx.test.espresso.intent.Intents.intending;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasAction;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasData;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.allOf;
-import static ru.netology.qa.elements.AboutScreen.getAboutElementsButtonAbout;
-import static ru.netology.qa.elements.AboutScreen.getAboutElementsButtonPrivacyPolicy;
-import static ru.netology.qa.elements.AboutScreen.getAboutElementsButtonTermsOfUse;
-import static ru.netology.qa.elements.WaitId.waitUntilElement;
+import static org.hamcrest.core.AllOf.allOf;
+
+import android.app.Instrumentation;
+import android.content.Intent;
+
+import androidx.test.espresso.intent.Intents;
+
+import org.hamcrest.Matcher;
 
 import io.qameta.allure.kotlin.Allure;
-import ru.iteco.fmhandroid.R;
+import ru.netology.qa.elements.AboutScreen;
 
 public class AboutSteps {
+    AboutScreen About = new AboutScreen();
 
-    public static void clickButtonAbout() {
-        Allure.step("Нажать на кнопку О приложении");
-        waitUntilElement(android.R.id.title);
-        onView(getAboutElementsButtonAbout())
-                .perform(click());
+    public void isAboutScreen() {
+        Allure.step("Проверить, что это окно About");
+        About.title.check(matches(isDisplayed()));
     }
 
-    public static void clickButtonPrivacyPolicy(){
-        Allure.step("Нажать на ссылку Политика конфиденциальности");
-        waitUntilElement(R.id.about_privacy_policy_value_text_view);
-        onView(getAboutElementsButtonPrivacyPolicy())
-                .check(matches(allOf(withText("https://vhospice.org/#/privacy-policy/"), isDisplayed(), isClickable())));
+    public void checkVersion() {
+        Allure.step("Проверить версию");
+        About.version.check(matches(allOf(withText("1.0.0"), isDisplayed())));
     }
 
-    public static void clickButtonTermsOfUse(){
-        Allure.step("Нажать на ссылку Пользовательское соглашение");
-        waitUntilElement(R.id.about_terms_of_use_value_text_view);
-        onView(getAboutElementsButtonTermsOfUse())
-                .check(matches(allOf(withText("https://vhospice.org/#/terms-of-use"), isDisplayed(), isClickable())));
+    public void checkTerms() {
+        Allure.step("Просмотр ссылки Пользовательское соглашение");
+        Intents.init();
+        Matcher<Intent> expectedIntent = allOf(hasAction(Intent.ACTION_VIEW), hasData("https://vhospice.org/#/terms-of-use"));
+        intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
+        About.terms.perform(click());
+        intended(expectedIntent);
+        Intents.release();
+    }
+
+    public void checkPrivacy() {
+        Allure.step("Просмотр ссылки Политика конфиденциальности");
+        Intents.init();
+        Matcher<Intent> expectedIntent = allOf(hasAction(Intent.ACTION_VIEW), hasData("https://vhospice.org/#/privacy-policy/"));
+        intending(expectedIntent).respondWith(new Instrumentation.ActivityResult(0, null));
+        About.privacy.perform(click());
+        intended(expectedIntent);
+        Intents.release();
+    }
+
+    public void backButton() {
+        Allure.step("Возврат к предыдущему экрану");
+        About.backButton.perform(click());
     }
 }

@@ -1,228 +1,171 @@
 package ru.netology.qa.steps;
 
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
-
-import static ru.netology.qa.elements.NewsControlPanelScreen.getNewsControlPanelElementsAddNews;
-import static ru.netology.qa.elements.NewsControlPanelScreen.getNewsControlPanelElementsButtonCategoryCreatingNews;
-import static ru.netology.qa.elements.NewsControlPanelScreen.getNewsControlPanelElementsButtonClickNews;
-import static ru.netology.qa.elements.NewsControlPanelScreen.getNewsControlPanelElementsButtonControlPanel;
-import static ru.netology.qa.elements.NewsControlPanelScreen.getNewsControlPanelElementsButtonDateCreatingNews;
-import static ru.netology.qa.elements.NewsControlPanelScreen.getNewsControlPanelElementsButtonDeleteNews;
-import static ru.netology.qa.elements.NewsControlPanelScreen.getNewsControlPanelElementsButtonEditNews;
-import static ru.netology.qa.elements.NewsControlPanelScreen.getNewsControlPanelElementsButtonFilterNewsControlPanel;
-import static ru.netology.qa.elements.NewsControlPanelScreen.getNewsControlPanelElementsButtonOkDateCreatingNews;
-import static ru.netology.qa.elements.NewsControlPanelScreen.getNewsControlPanelElementsButtonOkDeleteNews;
-import static ru.netology.qa.elements.NewsControlPanelScreen.getNewsControlPanelElementsButtonOkTimeCreatingNews;
-import static ru.netology.qa.elements.NewsControlPanelScreen.getNewsControlPanelElementsButtonSaveCreatingNews;
-import static ru.netology.qa.elements.NewsControlPanelScreen.getNewsControlPanelElementsButtonSaveEditingNews;
-import static ru.netology.qa.elements.NewsControlPanelScreen.getNewsControlPanelElementsButtonSorting;
-import static ru.netology.qa.elements.NewsControlPanelScreen.getNewsControlPanelElementsButtonSwitcher;
-import static ru.netology.qa.elements.NewsControlPanelScreen.getNewsControlPanelElementsButtonTimeCreatingNews;
-import static ru.netology.qa.elements.NewsControlPanelScreen.getNewsControlPanelElementsButtonTitleCreatingNews;
-import static ru.netology.qa.elements.NewsControlPanelScreen.getNewsControlPanelElementsButtonTitleNewsControlPanel;
-import static ru.netology.qa.elements.NewsControlPanelScreen.getNewsControlPanelElementsDescriptionCreatingNews;
-import static ru.netology.qa.elements.NewsControlPanelScreen.getNewsControlPanelElementsFilterNewsControlPanel;
-import static ru.netology.qa.elements.NewsControlPanelScreen.getNewsControlPanelElementsRemoveCheckBoxActive;
-import static ru.netology.qa.elements.NewsControlPanelScreen.getNewsControlPanelElementsRemoveCheckBoxNotActive;
-import static ru.netology.qa.elements.WaitId.waitUntilElement;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static org.hamcrest.Matchers.not;
 
 import io.qameta.allure.kotlin.Allure;
-import ru.iteco.fmhandroid.R;
+import ru.netology.qa.elements.NewsControlPanelScreen;
 
 public class NewsControlPanelSteps {
+    NewsControlPanelScreen NewsControlPanel = new NewsControlPanelScreen();
 
-    public static void clickButtonControlPanel(){
-        Allure.step("Нажать на кнопку Панель управления");
-        waitUntilElement(R.id.edit_news_material_button);
-        onView(getNewsControlPanelElementsButtonControlPanel())
-                .perform(click());
+    public void isControlPanelScreen() {
+        Allure.step("Проверить, что это экно Панели управления новостями");
+        NewsControlPanel.controlPanelScreen.check(matches(isDisplayed()));
     }
 
-    public static void clickButtonSorting(){
-        Allure.step("Нажать на кнопку сортировки новостей");
-        waitUntilElement(R.id.sort_news_material_button);
-        onView(getNewsControlPanelElementsButtonSorting())
-                .perform(click());
+    public void sortNews() {
+        Allure.step("Нажать кнопку сортировки новостей");
+        NewsControlPanel.sort.perform(click());
     }
 
-    public static void clickButtonDeleteNews(){
-        Allure.step("Нажать на кнопку Удалить новость");
-        waitUntilElement(R.id.delete_news_item_image_view);
-        onView(getNewsControlPanelElementsButtonDeleteNews())
-                .perform(click());
+    public void filterNews() {
+        Allure.step("Нажать кнопку фильтрации новостей");
+        NewsControlPanel.filter.perform(click());
+        NewsControlPanel.filterScreen.check(matches(isDisplayed()));
     }
 
-    public static void clickClickNews(){
-        Allure.step("Нажать на кнопку Новости на главной странице мобильного приложения");
-        waitUntilElement(R.id.news_item_material_card_view);
-        onView(getNewsControlPanelElementsButtonClickNews())
-                .perform(click());
+    public void activeNews() {
+        Allure.step("Выбор активных новостей на Панеле управлений новостями");
+        NewsControlPanel.notActiveNews.perform(click());
     }
 
-    public static void clickOkDeleteNews(){
-        Allure.step("Нажать на кнопку OK Удалить новость");
-        waitUntilElement(android.R.id.button1);
-        onView(getNewsControlPanelElementsButtonOkDeleteNews())
-                .perform(click());
+    public void notActiveNews() {
+        Allure.step("Выбор неактивных новостей на Панеле управлений новостями");
+        NewsControlPanel.activeNews.perform(click());
     }
 
-    public static void clickRemoveCheckBoxNotActive(){
-        Allure.step("Снять флажок с чекбокса Не активная");
-        waitUntilElement(R.id.filter_news_inactive_material_check_box);
-        onView(getNewsControlPanelElementsRemoveCheckBoxNotActive())
-                .perform(click());
+    public void deleteNews() {
+        Allure.step("Нажать на кнопку удалить новость");
+        NewsControlPanel.deleteButton.perform(click());
     }
 
-    public static void clickButtonEditNews(){
-        Allure.step("Нажать на кнопку Редактировать новость");
-        waitUntilElement(R.id.edit_news_item_image_view);
-        onView(getNewsControlPanelElementsButtonEditNews())
-                .perform(click());
+    public void checkPopUpOk() {
+        Allure.step("Проверить наличие всплывающей кнопки Ok");
+        NewsControlPanel.popUpOk.perform(click());
     }
 
-    public static void clickButtonTitleNewsControlPanel(){
-        Allure.step("Отредактировать название новости");
-        waitUntilElement(R.id.news_item_title_text_input_edit_text);
-        onView(getNewsControlPanelElementsButtonTitleNewsControlPanel())
-                .perform(clearText(), replaceText("Отредактированный текст новости"), closeSoftKeyboard());
+    public void checkPopUpCancel() {
+        Allure.step("Проверить наличие всплывающей кнопки Cancel");
+        NewsControlPanel.popUpCancel.perform(click());
     }
 
-    public static void clickButtonSaveEditingNews(){
-        Allure.step("Нажать на кнопку Сохранить редактирование");
-        waitUntilElement(R.id.save_button);
-        onView(getNewsControlPanelElementsButtonSaveEditingNews())
-                .perform(click());
+    public void checkEmpty() {
+        Allure.step("Проверить уведомление о заполнении пустых полей");
+        NewsControlPanel.emptyFieldsWarning.check(matches(isDisplayed()));
+    }
+    public void checkTryAgain() {
+        Allure.step("Проверить уведомление о повторении попытки позднее");
+        NewsControlPanel.tryAgainFieldsWarning.check(matches(isDisplayed()));
+    }
+    public void createNews() {
+        Allure.step("Нажать кнопку создания новости");
+        NewsControlPanel.create.perform(click());
+        NewsControlPanel.creatingScreen.check(matches(isDisplayed()));
     }
 
-    public static void clickButtonSwitcher(){
-        Allure.step("Сменить статус");
-        waitUntilElement(R.id.switcher);
-        onView(getNewsControlPanelElementsButtonSwitcher())
-                .perform(click());
+    public void selectCategory(String text) {
+        Allure.step("Выбрать категорию для создания новости");
+        NewsControlPanel.category.perform(click());
+        NewsControlPanel.category.perform(replaceText(text));
     }
 
-    public static void clickFilterNewsControlPanel(){
-        Allure.step("Нажать на кнопку Фильтровать Новости");
-        waitUntilElement(R.id.filter_news_material_button);
-        onView(getNewsControlPanelElementsFilterNewsControlPanel())
-                .perform(click());
+    public void enterTitle(String text) {
+        Allure.step("Ввести заголовок");
+        NewsControlPanel.createTitle.perform(replaceText(text));
+    }
+    public void expandNews() {
+        Allure.step("Развернуть новость");
+        NewsControlPanel.buttonExpand.perform(click());
     }
 
-    public static void clickButtonFilterNewsControlPanel(){
-        Allure.step("Нажать на кнопку Фильтровать");
-        waitUntilElement(R.id.filter_button);
-        onView(getNewsControlPanelElementsButtonFilterNewsControlPanel())
-                .perform(click());
+    public void checkExpandNews() {
+        Allure.step("Проверить открывшуюся новость");
+        NewsControlPanel.description.check(matches(isDisplayed()));
     }
 
-    public static void clickRemoveCheckBoxActive(){
+    public void rollUpNews() {
+        Allure.step("Свернуть новость");
+        NewsControlPanel.title.perform(click());
+    }
+
+    public void checkRollUpNews() {
+        Allure.step("Проверить, что новость свернулась");
+        NewsControlPanel.description.check(matches(not(isDisplayed())));
+    }
+
+    public void saveButton() {
+        Allure.step("Нажать на кнопку сохранить");
+        NewsControlPanel.saveButton.perform(click());
+    }
+
+    public void cancelButton() {
+        Allure.step("Нажать на кнопку отменить");
+        NewsControlPanel.cancelButton.perform(click());
+    }
+
+    public void filterButton() {
+        Allure.step("Нажать на кнопку фильтровать");
+        NewsControlPanel.filterButton.perform(click());
+    }
+
+    public void removeCheckBoxActive(){
         Allure.step("Снять флажок с чекбокса Активная");
-        waitUntilElement(R.id.filter_news_active_material_check_box);
-        onView(getNewsControlPanelElementsRemoveCheckBoxActive())
-                .perform(click());
+        NewsControlPanel.checkboxActive.perform(click());
     }
 
-    public static void clickAddNews(){
-        Allure.step("Нажать на кнопку Добавить новость");
-        waitUntilElement(R.id.add_news_image_view);
-        onView(getNewsControlPanelElementsAddNews())
-                .perform(click());
+    public void removeCheckBoxNotActive(){
+        Allure.step("Снять флажок с чекбокса Не активная");
+        NewsControlPanel.checkboxNotActive.perform(click());
     }
 
-    public static void clickButtonCategoryCreatingNews(){
-        Allure.step("Выбрать категорию для создания новости");
-        waitUntilElement(R.id.news_item_category_text_auto_complete_text_view);
-        onView(getNewsControlPanelElementsButtonCategoryCreatingNews())
-                .perform(click());
+    public void editNews() {
+        Allure.step("Нажать на кнопку редактировать новость");
+        NewsControlPanel.editButton.perform(click());
+        NewsControlPanel.editingScreen.check(matches(isDisplayed()));
     }
 
-    public static void clickButtonCategoryCreatingNew(){
-        Allure.step("Выбрать категорию для создания новости");
-        waitUntilElement(R.id.news_item_category_text_auto_complete_text_view);
-        onView(getNewsControlPanelElementsButtonCategoryCreatingNews())
-                .perform(click(),replaceText("День рождения"), closeSoftKeyboard());
+    public void selectEditCategory(String text) {
+        Allure.step("Выбрать категорию для редактирования новости");
+        NewsControlPanel.category.perform(click());
+        NewsControlPanel.category.perform(replaceText(text));
     }
 
-    public static void clickButtonCategoryCreatingNewsEmpty(){
-        Allure.step("Ввести в поле Категория собственное название категории");
-        waitUntilElement(R.id.news_item_category_text_auto_complete_text_view);
-        onView(getNewsControlPanelElementsButtonCategoryCreatingNews())
-                .perform(click(), replaceText("Собственное название категории"), closeSoftKeyboard());
+    public void enterEditTitle(String title) {
+        Allure.step("Ввести отредактированный текст заголовка");
+        NewsControlPanel.createTitle.perform(replaceText(title));
     }
 
-    public static void clickButtonCategoryCreatingNewsNumbers(){
-        Allure.step("Ввести в поле Категория цифры");
-        waitUntilElement(R.id.news_item_category_text_auto_complete_text_view);
-        onView(getNewsControlPanelElementsButtonCategoryCreatingNews())
-                .perform(click(), replaceText("741258"), closeSoftKeyboard());
+    public void enterDate(String date) {
+        Allure.step("Ввести дату");
+        NewsControlPanel.date.perform(replaceText(date));
     }
 
-    public static void clickButtonCategoryCreatingCharacters(){
-        Allure.step("Ввести в поле Категория спецсимволы");
-        waitUntilElement(R.id.news_item_category_text_auto_complete_text_view);
-        onView(getNewsControlPanelElementsButtonCategoryCreatingNews())
-                .perform(click(), replaceText("*)?(:%;"), closeSoftKeyboard());
+    public void enterTime(String time) {
+        Allure.step("Вести время");
+        NewsControlPanel.time.perform(replaceText(time));
     }
 
-    public static void clickButtonTitleCreatingNews(){
-        Allure.step("Ввести в поле Заголовок заголовок новости");
-        waitUntilElement(R.id.news_item_title_text_input_edit_text);
-        onView(getNewsControlPanelElementsButtonTitleCreatingNews())
-                .perform(click(), clearText(), replaceText("Главные новости сегодня"), closeSoftKeyboard());
+    public void enterDescription(String description) {
+        Allure.step("Ввести описание");
+        NewsControlPanel.createDescription.perform(replaceText(description));
     }
 
-    public static void clickButtonDateCreatingNews(){
-        Allure.step("В поле Дата публикации выбрать дату по календарю");
-        waitUntilElement(R.id.news_item_publish_date_text_input_edit_text);
-        onView(getNewsControlPanelElementsButtonDateCreatingNews())
-                .perform(click());
+    public void editStatus() {
+        Allure.step("Изменить статус");
+        NewsControlPanel.buttonStatus.perform(click());
     }
 
-    static String nextYear = "28.06.2024";
-    public static void clickButtonDateCreatingNextDate(){
-        Allure.step("В поле Дата публикации выбрать дату будущего года");
-        waitUntilElement(R.id.news_item_publish_date_text_input_edit_text);
-        onView(getNewsControlPanelElementsButtonDateCreatingNews())
-                .perform(replaceText(nextYear));
+    public void checkStatusNotActive() {
+        Allure.step("Проверить, что статус Не активный");
+        NewsControlPanel.newsStatusNotActive.check(matches(isDisplayed()));
     }
 
-    public static void clickButtonOkDateCreatingNews(){
-        Allure.step("Нажать кнопку ОК Дата");
-        waitUntilElement(android.R.id.button1);
-        onView(getNewsControlPanelElementsButtonOkDateCreatingNews())
-                .perform(click());
-    }
-
-    public static void clickButtonTimeCreatingNews(){
-        Allure.step("В поле Время выбрать время");
-        waitUntilElement(R.id.news_item_publish_time_text_input_edit_text);
-        onView(getNewsControlPanelElementsButtonTimeCreatingNews())
-                .perform(click());
-    }
-
-    public static void clickDescriptionCreatingNews(){
-        Allure.step("Ввести в поле Описание описание новости");
-        waitUntilElement(R.id.news_item_description_text_input_edit_text);
-        onView(getNewsControlPanelElementsDescriptionCreatingNews())
-                .perform(replaceText("Новое объявление"), closeSoftKeyboard());
-    }
-
-    public static void clickButtonOkTimeCreatingNews(){
-        Allure.step("Нажать кнопку ОК Время");
-        waitUntilElement(android.R.id.button1);
-        onView(getNewsControlPanelElementsButtonOkTimeCreatingNews())
-                .perform(click());
-    }
-
-    public static void clickButtonSaveCreatingNews(){
-        Allure.step("Нажать на кнопку Сохранить новость");
-        waitUntilElement(R.id.save_button);
-        onView(getNewsControlPanelElementsButtonSaveCreatingNews())
-                .perform(scrollTo(), click());
+    public void checkStatusActive() {
+        Allure.step("Проверить, что статус Активный");
+        NewsControlPanel.newsStatusActive.check(matches(isDisplayed()));
     }
 }

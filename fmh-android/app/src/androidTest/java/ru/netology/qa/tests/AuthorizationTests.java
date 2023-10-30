@@ -1,5 +1,12 @@
 package ru.netology.qa.tests;
 
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static org.hamcrest.Matchers.allOf;
+
+import android.os.SystemClock;
+
 import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.rule.ActivityTestRule;
 
@@ -9,129 +16,95 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
-
 import io.qameta.allure.kotlin.junit4.DisplayName;
 import ru.iteco.fmhandroid.ui.AppActivity;
-import ru.netology.qa.elements.AuthorizationScreen;
 import ru.netology.qa.steps.AuthorizationSteps;
+import ru.netology.qa.steps.MainSteps;
 
 @RunWith(AllureAndroidJUnit4.class)
-
 public class AuthorizationTests {
+    AuthorizationSteps Auth = new AuthorizationSteps();
+    MainSteps Main = new MainSteps();
 
     @Rule
-    public ActivityTestRule<AppActivity> activityTestRule =
+    public ActivityTestRule<AppActivity> mActivityTestRule =
             new ActivityTestRule<>(AppActivity.class);
 
     @Before
-    public void authorizationVerification() {
+    public void authCheck() {
+        SystemClock.sleep(5000);
         try {
-            AuthorizationScreen.textAuthorization();
+            Auth.isAuthorizationScreen();
         } catch (NoMatchingViewException e) {
-            AuthorizationScreen.clickButtonExit(AuthorizationScreen.getAuthorizationElementsButtonExit());
-            AuthorizationSteps.clickButtonLogOut();
+            Main.logOut();
         }
     }
 
     @Test
     @DisplayName("ТС-1. Авторизация валидными данными")
     public void validAuth(){
-        AuthorizationSteps.textAuthorization();
-        AuthorizationSteps.clickLoginField();
-        AuthorizationSteps.clickPasswordField();
-        AuthorizationScreen.clickButton(AuthorizationScreen.getAuthorizationElementsButton());
-        AuthorizationScreen.clickButtonExit(AuthorizationScreen.getAuthorizationElementsButtonExit());
-        AuthorizationSteps.clickButtonLogOut();
+        Auth.isAuthorizationScreen();
+        Auth.validAuth();
+        Main.logOut();
     }
 
     @Test
     @DisplayName("ТС-2. Поле Логин пустое, при авторизации")
     public void emptyLogin(){
-        AuthorizationSteps.textAuthorization();
-        AuthorizationSteps.clickLoginEmpty();
-        AuthorizationSteps.clickPasswordField();
-        AuthorizationScreen.clickButton(AuthorizationScreen.getAuthorizationElementsButton());
+        Auth.isAuthorizationScreen();
+        Auth.loginInputField(" ");
+        Auth.passwordInputField("password2");
+        Auth.buttonClick();
+        onView(allOf(withContentDescription("Login and password cannot be empty"), isDisplayed()));
     }
 
     @Test
-    @DisplayName("ТС-3. Поле Логин заполнено данными незарегистрированного пользователя")
-    public void loginFieldUnregisteredUser() {
-        AuthorizationSteps.textAuthorization();
-        AuthorizationSteps.clickLoginFieldUnregisteredUser();
-        AuthorizationSteps.clickPasswordField();
-        AuthorizationScreen.clickButton(AuthorizationScreen.getAuthorizationElementsButton());
+    @DisplayName("ТС-7. Поле Пароль пустое, при авторизации")
+    public void emptyPassword(){
+        Auth.isAuthorizationScreen();
+        Auth.loginInputField("login2");
+        Auth.passwordInputField(" ");
+        Auth.buttonClick();
+        onView(allOf(withContentDescription("Login and password cannot be empty"), isDisplayed()));
     }
 
     @Test
-    @DisplayName("ТС-4. Поле Логин состоит из спецсимволов")
-    public void loginFieldWithSpecialCharacters() {
-        AuthorizationSteps.textAuthorization();
-        AuthorizationSteps.clickLoginFieldWithSpecialCharacters();
-        AuthorizationSteps.clickPasswordField();
-        AuthorizationScreen.clickButton(AuthorizationScreen.getAuthorizationElementsButton());
-    }
-
-
-    @Test
-    @DisplayName("ТС-5. Поле Логин состоит из одного символа")
-    public void loginFieldOneLetter() {
-        AuthorizationSteps.textAuthorization();
-        AuthorizationSteps.clickLoginFieldOneLetter();
-        AuthorizationSteps.clickPasswordField();
-        AuthorizationScreen.clickButton(AuthorizationScreen.getAuthorizationElementsButton());
+    @DisplayName("ТС-4. Ввод спецсимволов в поле Логин")
+    public void loginWithSpecialCharacters(){
+        Auth.isAuthorizationScreen();
+        Auth.loginInputField("!@#$%%^");
+        Auth.passwordInputField("password2");
+        Auth.buttonClick();
+        onView(allOf(withContentDescription("Wrong login or password"), isDisplayed()));
     }
 
     @Test
-    @DisplayName("ТС-6. Поле Логин состоит из букв разного регистра")
-    public void loginFieldLettersOfDifferentCase() {
-        AuthorizationSteps.textAuthorization();
-        AuthorizationSteps.clickLoginFieldLettersOfDifferentCase();
-        AuthorizationSteps.clickPasswordField();
-        AuthorizationScreen.clickButton(AuthorizationScreen.getAuthorizationElementsButton());
+    @DisplayName("ТС-9. Ввод спецсимволов в поле Пароль")
+    public void passwordWithSpecialCharacters(){
+        Auth.isAuthorizationScreen();
+        Auth.loginInputField("login2");
+        Auth.passwordInputField("$%#^&*");
+        Auth.buttonClick();
+        onView(allOf(withContentDescription("Wrong login or password"), isDisplayed()));
     }
 
     @Test
-    @DisplayName("ТС-7. Поле Пароль пустое")
-    public void passwordFieldIsEmpty() {
-        AuthorizationSteps.textAuthorization();
-        AuthorizationSteps.clickLoginField();
-        AuthorizationSteps.clickPasswordFieldIsEmpty();
-        AuthorizationScreen.clickButton(AuthorizationScreen.getAuthorizationElementsButton());
+    @DisplayName("ТС-6. Ввод букв разного регистра в поле Логин")
+    public void invalidLogin(){
+        Auth.isAuthorizationScreen();
+        Auth.loginInputField("LoGiN2");
+        Auth.passwordInputField("password2");
+        Auth.buttonClick();
+        onView(allOf(withContentDescription("Wrong login or password"), isDisplayed()));
     }
 
     @Test
-    @DisplayName("ТС-8. Поле Пароль заполнено данными незарегистрированного пользователя")
-    public void passwordFieldUnregisteredUser() {
-        AuthorizationSteps.textAuthorization();
-        AuthorizationSteps.clickLoginField();
-        AuthorizationSteps.clickPasswordFieldUnregisteredUser();
-        AuthorizationScreen.clickButton(AuthorizationScreen.getAuthorizationElementsButton());
-    }
-
-    @Test
-    @DisplayName("ТС-9. Поле Пароль состоит из спецсимволов")
-    public void passwordFieldWithSpecialCharacters() {
-        AuthorizationSteps.textAuthorization();
-        AuthorizationSteps.clickLoginField();
-        AuthorizationSteps.clickPasswordFieldWithSpecialCharacters();
-        AuthorizationScreen.clickButton(AuthorizationScreen.getAuthorizationElementsButton());
-    }
-
-    @Test
-    @DisplayName("ТС-10. Поле Пароль состоит из одного символа")
-    public void passwordFieldOneLetter() {
-        AuthorizationSteps.textAuthorization();
-        AuthorizationSteps.clickLoginField();
-        AuthorizationSteps.clickPasswordFieldOneLetter();
-        AuthorizationScreen.clickButton(AuthorizationScreen.getAuthorizationElementsButton());
-    }
-
-    @Test
-    @DisplayName("ТС-11. Поле Пароль состоит из букв разного регистра")
-    public void passwordFieldLettersOfDifferentCase() {
-        AuthorizationSteps.textAuthorization();
-        AuthorizationSteps.clickLoginField();
-        AuthorizationSteps.clickPasswordFieldLettersOfDifferentCase();
-        AuthorizationScreen.clickButton(AuthorizationScreen.getAuthorizationElementsButton());
+    @DisplayName("ТС-11. Ввод букв разного регистра в поле Пароль")
+    public void invalidPassword(){
+        Auth.isAuthorizationScreen();
+        Auth.loginInputField("login2");
+        Auth.passwordInputField("PasSWorD2");
+        Auth.buttonClick();
+        onView(allOf(withContentDescription("Wrong login or password"), isDisplayed()));
     }
 }
